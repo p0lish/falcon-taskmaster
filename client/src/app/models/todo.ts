@@ -1,5 +1,7 @@
+import { Injector } from '@angular/core';
+import { UtilsService } from '../services/utils.service';
 export class Todo {
-    id: string;
+    id: number;
     title = '';
     description?: string;
     completed = false;
