@@ -1,0 +1,23 @@
+{
+  "name": "frontend-assignment",
+  "version": "1.0.0",
+  "description": "Welcome to the assignment for candidates applying for a frontend position at Falcon.io.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "(cd ./server &&  npm run start) & (cd ./client && npm run start)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FalconSocial/frontend-assignment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FalconSocial/frontend-assignment/issues"
+  },
+  "homepage": "https://github.com/FalconSocial/frontend-assignment#readme",
+  "dependencies": {
+    "server": "file:./server",
+    "client": "file:./client"
+  }
+}
