@@ -305,45 +305,11 @@
     </a>
 </div>
 <div class="content" role="main">
-  <div 
-    *ngIf="listState === listStates.listing" 
-    class="add-task-form"
-  >
-    <input
-      
-      [(ngModel)]="titleValue"
-      name="titleValue"
-      (keyup.enter)="submitTask($event)" 
-      type="text" 
-      class="input-title" 
-      placeholder="What needs to be done?"
-      id="taskTitle"
-    >
-    <textarea
-      [(ngModel)]="descriptionValue"
-      name="descriptionValue"
-      (keyup.enter)="submitTask($event)" 
-      (keyup)="checkLength()" 
-      [maxLength]="descriptionMaxLength" 
-      name=""  
-      cols="30" 
-      rows="3" 
-      class="input-description" 
-      placeholder="Put a description here. (optional)"
-      id="taskDescription"
-    ></textarea>
-    <span>{{descriptionLength}}</span>
+  <div class="components-wrapper">
+    <app-task-form (addTask)="refreshTaskList()"></app-task-form>
+    <app-task-list [refreshList]="listRefreshSwitch"></app-task-list>
   </div>
-  <ul class="task-list">
-    <li class="task-item" *ngFor="let task of tasks;">
-      <div class="text-content">
-        <h4>{{task.title}}</h4>
-        <p>{{task.description}}</p>
-      </div>
-      <button (click)="deleteTask(task.id)">X</button>
-    </li>
-  </ul>
- 
+  
 </div>
 
 

@@ -1,0 +1,26 @@
+<div class="add-task-form"
+>
+    <input
+        [(ngModel)]="titleValue"
+        name="titleValue"
+        (keyup.enter)="submitTask($event)" 
+        type="text" 
+        class="input-title" 
+        placeholder="What needs to be done?"
+        id="taskTitle"
+    >
+    <textarea
+        [(ngModel)]="descriptionValue"
+        name="descriptionValue"
+        (keyup.enter)="submitTask($event)" 
+        (keyup)="checkLength()" 
+        [maxLength]="descriptionMaxLength" 
+        name=""  
+        cols="30" 
+        rows="3" 
+        class="input-description" 
+        placeholder="Put a description here. (optional)"
+        id="taskDescription"
+    ></textarea>
+    <span>{{descriptionLength}}</span>
+</div>

@@ -1,0 +1,23 @@
+.add-task-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+    border: 1px solid lightgray;
+
+    input,
+    input:active,
+    input:focus
+    {
+        border: none;
+        outline: none;
+        margin: 1rem;
+    }
+    textarea, textarea:active, input:focus {
+        border: none;
+        resize: none;
+        outline: none;
+        margin: 1rem;
+
+    }
+}

@@ -1,0 +1,6 @@
+<ul class="task-list">
+    <li class="task-list-item" *ngFor="let task of tasks;">
+      <app-task-item (update)="getTasks()"  [task]="task"></app-task-item>
+    </li>
+</ul>
+<button (click)="removeAllTask()">Clear task list</button>

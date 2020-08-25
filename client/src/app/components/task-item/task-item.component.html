@@ -1,0 +1,13 @@
+<div class="task-item" *ngIf="!underEdit"   (dblclick)="editTask()">
+        <div class="text-content">
+            <h4>{{task.title}}</h4>
+            <p>{{task.description}}</p>
+        </div>
+        <button (click)="deleteTask(task.id)">X</button>
+</div>
+
+
+<div *ngIf="underEdit" (appClickOutside)="closeAndSave()">
+    <app-task-form [task]="task">
+    </app-task-form>
+ </div>

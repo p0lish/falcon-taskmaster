@@ -1,33 +1,4 @@
-.add-task-form {
-    display: flex;
-    flex-direction: column;
-    width: 60%;
-
-    border: 1px solid lightgray;
-
-    input,
-    input:active,
-    input:focus
-    {
-        border: none;
-        outline: none;
-    }
-    textarea, textarea:active, input:focus {
-        border: none;
-        resize: none;
-        outline: none;
-    }
-}
-
-.task-list {
-    width: 60%;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-
-    .task-item {
-        display: flex;
-        justify-content: space-between;
-    }
-
+.components-wrapper {
+    width: 100%;
+    max-width: 800px;
 }
