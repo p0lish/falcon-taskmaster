@@ -13,7 +13,6 @@ import { UtilsService } from './utils.service';
 export class TaskDataService {
 
   baseUrl: string = environment.apiBaseUrl;
-  tasks: Todo[] = [];
 
   constructor(private http: HttpClient, private utils: UtilsService) {}
 
@@ -51,15 +50,9 @@ export class TaskDataService {
 
   }
 
-  toggleTaskStatus(id: number): Observable<any> {
-    const togglableTask = this.tasks.filter(task => task.id = id)[0];
-    if (togglableTask) {
-      togglableTask.completed = !togglableTask.completed;
-      return this.updateTaskById(id, {completed: togglableTask.completed})
+  toggleTaskStatus(id: number, status: boolean): Observable<any> {
+      return this.updateTaskById(id, {completed: !status})
       .pipe(catchError(this.errorHandler));
-    } else {
-      return of({});
-    }
   }
 
 }
