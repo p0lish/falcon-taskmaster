@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { TaskItemComponent } from './task-item.component';
+import { Task } from 'src/app/models/task';
 
 describe('TaskItemComponent', () => {
   let component: TaskItemComponent;
@@ -8,7 +10,8 @@ describe('TaskItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TaskItemComponent ]
+      declarations: [ TaskItemComponent ],
+      imports: [HttpClientTestingModule]
     })
     .compileComponents();
   }));
@@ -19,7 +22,21 @@ describe('TaskItemComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('test if has input but empty', () => {
+    component.task = new Task({});
+  } );
+
+  it('should be a completed task after one toggleStatus call', () => {
+    const task = new Task({title: 'test', description: 'description'});
+    const taskCompleted: Task = Object.assign(task);
+    taskCompleted.completed = true;
+    const eventMock = {target:  {checked: true}};
+    component.task = task;
+
+    component.toggleStatus(task.id, eventMock);
+    expect(component.toggleStatus(task.id, eventMock)).toEqual(taskCompleted);
+
   });
+
+
 });

@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { Todo } from 'src/app/models/todo';
+import { Task } from 'src/app/models/task';
 import { first } from 'rxjs/operators';
 import { TaskDataService } from 'src/app/services/task-data.service';
 import { TaskFormComponent } from '../task-form/task-form.component';
-import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-task-item',
@@ -12,7 +11,7 @@ import { stringify } from '@angular/compiler/src/util';
 })
 export class TaskItemComponent implements OnInit {
 
-  @Input() task!: Todo;
+  @Input() task!: Task;
   @Output() update: EventEmitter<number> = new EventEmitter();
   @ViewChild(TaskFormComponent) taskForm: TaskFormComponent;
 
@@ -31,16 +30,17 @@ export class TaskItemComponent implements OnInit {
     this.underEdit = false;
     const updatedTitle = this.taskForm.titleValue;
     const updatedDescription = this.taskForm.descriptionValue;
-    const updatedTodo: {[k: string]: any} = {};
+    const updatedTask: {[k: string]: any} = {};
 
     if ( updatedTitle !== this.task.title ) {
-      updatedTodo.title = updatedTitle;
-    }
-    if ( updatedDescription !== this.task.description ) {
-      updatedTodo.description = updatedDescription;
+      updatedTask.title = updatedTitle;
     }
 
-    if (Object.keys(updatedTodo).length > 0) {
+    if ( updatedDescription !== this.task.description ) {
+      updatedTask.description = updatedDescription;
+    }
+
+    if (Object.keys(updatedTask).length > 0) {
       this.taskDataService.updateTaskById(
         this.task.id,
         {
@@ -53,12 +53,14 @@ export class TaskItemComponent implements OnInit {
 
   }
 
-  toggleStatus(id): void {
-    this.taskDataService.toggleTaskStatus(id, this.task.completed).pipe(first()).subscribe(result => {
+  toggleStatus(id, event): Task {
+    this.taskDataService.toggleTaskStatus(id, event.target.checked).pipe(first()).subscribe(result => {
       this.update.emit();
-    });
+     });
+    const task = new Task(this.task);
+    task.completed = event.target.checked;
+    return task;
   }
-
 
   deleteTask(id): void {
     this.taskDataService.deleteTaskById(id).pipe(first()).subscribe(result => {
