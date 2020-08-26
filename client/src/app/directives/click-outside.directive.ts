@@ -1,5 +1,6 @@
 import { Directive, ElementRef, EventEmitter, Output, HostListener } from '@angular/core';
 
+// This Directive responsible to handle when the user clicks out from the currently edited task item.
 @Directive({
   selector: '[appClickOutside]'
 })
