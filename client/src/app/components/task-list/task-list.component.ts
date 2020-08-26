@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { TaskDataService } from 'src/app/services/task-data.service';
-import { Todo } from 'src/app/models/todo';
+import { Task } from 'src/app/models/task';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -11,7 +11,8 @@ import { first } from 'rxjs/operators';
 export class TaskListComponent implements OnChanges {
 
   @Input() refreshList!: boolean;
-  tasks: Todo[] = [];
+  tasks: Task[] = [];
+  beOnline = true;
 
   constructor(private taskDataService: TaskDataService) {
   }
@@ -23,15 +24,21 @@ export class TaskListComponent implements OnChanges {
   getTasks(): void {
     this.taskDataService.getAllTasks().pipe(first()).subscribe(tasks => {
       this.tasks = tasks.sort((a: any, b: any) => a.createdAt > b.createdAt ? 1 : -1);
-    });
+    }, error => { this.beOnline = false; });
   }
 
   removeAllTask(): void {
     this.tasks.map(task => {
       this.taskDataService.deleteTaskById(task.id).pipe(first()).subscribe();
-
     });
     this.tasks = [];
+  }
+
+  markAllDone(): void {
+    this.tasks.map(task => {
+      task.completed = true;
+      this.taskDataService.updateTaskById(task.id, {completed: task.completed}).pipe(first()).subscribe();
+    });
   }
 
 }
