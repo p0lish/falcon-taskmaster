@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Todo } from '../models/todo';
+import { Task } from '../models/task';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UtilsService } from './utils.service';
 
@@ -21,9 +21,9 @@ export class TaskDataService {
   }
 
 
-  addTask(todo: Todo): Observable<object> {
-    todo.id = this.utils.generateId();
-    return this.http.post(`${this.baseUrl}/tasks`, todo)
+  addTask(task: Task): Observable<object> {
+    task.id = this.utils.generateId();
+    return this.http.post(`${this.baseUrl}/tasks`, task)
     .pipe(catchError(this.errorHandler));
   }
 
@@ -51,7 +51,7 @@ export class TaskDataService {
   }
 
   toggleTaskStatus(id: number, status: boolean): Observable<any> {
-      return this.updateTaskById(id, {completed: !status})
+      return this.updateTaskById(id, {completed: status})
       .pipe(catchError(this.errorHandler));
   }
 
