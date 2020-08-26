@@ -4,7 +4,8 @@
   "description": "Welcome to the assignment for candidates applying for a frontend position at Falcon.io.",
   "main": "index.js",
   "scripts": {
-    "dev": "(cd ./server &&  npm run start) & (cd ./client && npm run start)"
+    "dev": "(cd ./server &&  npm run start) & (cd ./client && npm run start)",
+    "init": "(cd ./server &&  npm install) & (cd ./client && npm install)"
   },
   "repository": {
     "type": "git",
