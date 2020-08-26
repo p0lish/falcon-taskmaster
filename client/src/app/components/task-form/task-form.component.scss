@@ -3,7 +3,9 @@
     flex-direction: column;
     width: 100%;
     
-    border: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+
+    color: gray;
 
     input,
     input:active,
@@ -12,12 +14,20 @@
         border: none;
         outline: none;
         margin: 1rem;
+        font-size: 1.2rem;
     }
     textarea, textarea:active, input:focus {
         border: none;
         resize: none;
         outline: none;
         margin: 1rem;
+        color: gray;
 
+    }
+
+    .char-counter {
+        text-align: end;
+        margin-right: 1rem;
+        font-size: small;
     }
 }

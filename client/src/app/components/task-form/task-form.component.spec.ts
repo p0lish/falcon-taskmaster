@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { TaskFormComponent } from './task-form.component';
+import { Task } from 'src/app/models/task';
 
 describe('TaskFormComponent', () => {
   let component: TaskFormComponent;
@@ -8,7 +10,8 @@ describe('TaskFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TaskFormComponent ]
+      declarations: [ TaskFormComponent ],
+      imports: [HttpClientTestingModule]
     })
     .compileComponents();
   }));
@@ -22,4 +25,18 @@ describe('TaskFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('edit mode should be true if there is input task', () => {
+    const task = new Task({
+      title: 'hello',
+      completed: false,
+    });
+    component.task = task;
+    component.ngOnInit();
+
+    expect(task.title).toEqual('hello');
+    expect(task.completed).toEqual(false);
+    expect(component.editMode).toEqual(true);
+  });
+
 });

@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { TaskDataService } from 'src/app/services/task-data.service';
-import { Todo } from 'src/app/models/todo';
+import { Task } from 'src/app/models/task';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -10,10 +10,11 @@ import { first } from 'rxjs/operators';
 })
 export class TaskFormComponent implements OnInit {
 
-  @Input() task!: Todo;
+  @Input() task!: Task;
   @Output() addTask: EventEmitter<any> = new EventEmitter();
 
-  descriptionMaxLength = 100;
+  editMode = false;
+  descriptionMaxLength = 150;
   descriptionLength = this.descriptionMaxLength;
 
   titleValue: string;
@@ -24,6 +25,9 @@ export class TaskFormComponent implements OnInit {
   ngOnInit(): void {
     this.descriptionValue = this.task?.description || '';
     this.titleValue = this.task?.title || '';
+    if (this.task) {
+      this.editMode = true;
+    }
   }
 
   clearInputs(): void {
@@ -36,15 +40,29 @@ export class TaskFormComponent implements OnInit {
     this.descriptionLength = this.descriptionMaxLength - this.descriptionValue.length;
   }
 
+  preventNewLine(event): void {
+    event.preventDefault();
+  }
+
   submitTask(event): void {
+    event.preventDefault();
     const title = this.titleValue;
     const description = this.descriptionValue;
-    const currentTodo = new Todo({title, description});
-    if (title.length > 0){
-      this.taskDataService.addTask(currentTodo).pipe(first()).subscribe(result => {
+    const currentTask = new Task({title, description});
+    if (!this.editMode) {
+      if (title.length > 0){
+        this.taskDataService.addTask(currentTask).pipe(first()).subscribe(result => {
         this.clearInputs();
         this.addTask.emit();
       });
     }
+  } else {
+      this.taskDataService.updateTaskById(
+        this.task.id,
+        {
+        title, description}).pipe(first()).subscribe(result => {
+        this.addTask.emit();
+      });
+  }
   }
 }

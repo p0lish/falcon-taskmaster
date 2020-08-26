@@ -1,5 +1,4 @@
-<div class="add-task-form"
->
+<div class="add-task-form">
     <input
         [(ngModel)]="titleValue"
         name="titleValue"
@@ -12,6 +11,7 @@
     <textarea
         [(ngModel)]="descriptionValue"
         name="descriptionValue"
+        (keydown.enter)="preventNewLine($event)"
         (keyup.enter)="submitTask($event)" 
         (keyup)="checkLength()" 
         [maxLength]="descriptionMaxLength" 
@@ -19,8 +19,8 @@
         cols="30" 
         rows="3" 
         class="input-description" 
-        placeholder="Put a description here. (optional)"
+        placeholder="Put a description here (optional). Press Enter to save."
         id="taskDescription"
     ></textarea>
-    <span>{{descriptionLength}}</span>
+    <span class="char-counter">{{descriptionLength}}</span>
 </div>
